@@ -14,6 +14,23 @@ app.use(bodyParser.json());
 app.use(logger('tiny'));
 app.use(router);
 
+// 404
+app.use((req, res, next) => {
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+// 500
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.send({
+        error: {
+            message: err.message
+        }
+    });
+});
+
 app.listen(3000, () => {
     console.log('Web server listening for incoming requests.');
 });

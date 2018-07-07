@@ -24,9 +24,17 @@ app.use((req, res, next) => {
 // 500
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
+    const validationMessages = [];
+    if (err.errors) {
+        Object.getOwnPropertyNames(err.errors)
+        .forEach(propName => {
+            validationMessages.push(err.errors[propName].message);
+        });
+    }
     res.send({
         error: {
-            message: err.message
+            message: err.message,
+            validationMessages
         }
     });
 });

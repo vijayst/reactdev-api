@@ -1,11 +1,18 @@
 const CountryModel = require('../models/countryModel');
 
 class CountryController {
-    post(req, res) {
+    post(req, res, next) {
         const { name } = req.body;
         const model = new CountryModel({ name });
-        model.save();
-        res.send({ success: true });
+        model.save()
+        .then(() => {
+            res.send({ success: true });    
+        })
+        .catch(error => {
+            const errorObject = new Error('Error in saving country');
+            errorObject.errors = error.errors;
+            next(errorObject);
+        });
     }
 
     get(req, res) {

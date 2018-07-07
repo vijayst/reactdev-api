@@ -2,10 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 const router = require('./router');
 
-const mongoDB = 'mongodb://localhost/reactdev';
-mongoose.connect(mongoDB);
+dotenv.config();
+
+mongoose.connect(process.env.MONGO_DB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 

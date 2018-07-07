@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const jwt = require('express-jwt');
+const fs = require('fs');
 const router = require('./router');
 
 dotenv.config();
@@ -12,6 +14,10 @@ mongoose.Promise = global.Promise;
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const app = express();
+
+const publicKey = fs.readFileSync('./reactdev.pem');
+app.use(jwt({ secret: publicKey }));
+
 app.use(bodyParser.json());
 app.use(logger('tiny'));
 app.use(router);

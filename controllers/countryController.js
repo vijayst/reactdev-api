@@ -16,6 +16,7 @@ class CountryController {
     }
 
     get(req, res) {
+        console.log(req.user);
         CountryModel.find({})
         .then(countries => {
             res.send(countries);

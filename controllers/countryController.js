@@ -1,4 +1,4 @@
-const CountryModel = require('../models/countryModel');
+const CountryModel = require('../models/CountryModel');
 
 class CountryController {
     post(req, res, next) {

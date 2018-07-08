@@ -16,10 +16,16 @@ class CountryController {
     }
 
     get(req, res) {
-        console.log(req.user);
         CountryModel.find({})
         .then(countries => {
             res.send(countries);
+        });
+    }
+
+    delete(req, res) {
+        CountryModel.remove({})
+        .then(() => {
+            res.send({ success: true });
         });
     }
 }
